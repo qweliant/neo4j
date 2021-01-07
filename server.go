@@ -44,11 +44,11 @@ type Balance struct {
 
 type Owner struct {
 	gogm.BaseNode
-	Accounts     *Account       `gogm:"direction=incoming;relationship=owner"`
-	Names        []*Name        `gogm:"direction=outgoing;relationship=name"`
-	PhoneNumbers []*PhoneNumber `gogm:"direction=outgoing;relationship=number"`
-	Emails       []*Email       `gogm:"direction=outgoing;relationship=email"`
-	Addresses    []*Address     `gogm:"direction=outgoing;relationship=address"`
+	Account      *Account       `gogm:"direction=incoming;relationship=owner"`
+	Names        *Name        `gogm:"direction=outgoing;relationship=name"`
+	PhoneNumbers *PhoneNumber `gogm:"direction=outgoing;relationship=number"`
+	Emails       *Email       `gogm:"direction=outgoing;relationship=email"`
+	Addresses    *Address     `gogm:"direction=outgoing;relationship=address"`
 }
 
 type Name struct {
@@ -181,11 +181,11 @@ func main() {
 		Limit:     0,
 		Currency:  "USD",
 	}
-	// declare array for owners
-	var accountNames []*Name
-	var accountPhoneNumber []*PhoneNumber
-	var accountEmail []*Email
-	var accountAddress []*Address
+	// // declare array for owners
+	// var accountNames []*Name
+	// var accountPhoneNumber []*PhoneNumber
+	// var accountEmail []*Email
+	// var accountAddress []*Address
 
 	// array for instituion accounts
 	var accounts []*Account
@@ -236,30 +236,31 @@ func main() {
 	}
 
 	// append together for owners
-	phoneNums := append(accountPhoneNumber, p1, p2)
-	names := append(accountNames, n1, n2, n3)
-	emails := append(accountEmail, e1, e2)
-	addresses := append(accountAddress, a1, a2)
+	// phoneNums := append(accountPhoneNumber, p1, p2)
+	// names := append(accountNames, n1, n2, n3)
+	// emails := append(accountEmail, e1, e2)
+	// addresses := append(accountAddress, a1, a2)
 
 	owners1 := &Owner{
-		Names:        names,
-		PhoneNumbers: phoneNums,
-		Emails:       emails,
-		Addresses:    addresses,
+		Names:        n1,
+		PhoneNumbers: p1,
+		Emails:       e1,
+		Addresses:    a1,
 	}
 
 	owners2 := &Owner{
-		Names:        names,
-		PhoneNumbers: phoneNums,
-		Emails:       emails,
-		Addresses:    addresses,
+		Names:        n2,
+		PhoneNumbers: p2,
+		Emails:       e2,
+		Addresses:    a2,
 	}
 	owners3 := &Owner{
-		Names:        names,
-		PhoneNumbers: phoneNums,
-		Emails:       emails,
-		Addresses:    addresses,
+		Names:        n3,
+		PhoneNumbers: p1,
+		Emails:       e2,
+		Addresses:    a1,
 	}
+
 	// set bi directional pointer
 	accountA.Balance = balance1
 	balance1.Account = accountA
@@ -270,17 +271,17 @@ func main() {
 	accountC.Balance = balance3
 	balance3.Account = accountC
 
+	owners1.Account = accountA
 	accountA.Owner = owners1
-	owners1.Accounts = accountA
 
+	owners2.Account = accountB
 	accountB.Owner = owners2
-	owners2.Accounts = accountB
 
+	owners3.Account = accountC
 	accountC.Owner = owners3
-	owners3.Accounts = accountC
 
 	accountsInsA := append(accounts, accountA, accountB)
-	accountsInsB := append(accounts,accountC)
+	accountsInsB := append(accounts, accountC)
 
 	institutionA.Accounts = accountsInsA
 	institutionB.Accounts = accountsInsB
