@@ -43,9 +43,30 @@ type Account struct {
 	Subtype            string `gogm:"name=subtype"`
 	IntstitutionID     string `gogm:"name=institution_id"`
 	VerificationStatus bool
-	Owner              *Owner   `gogm:"direction=outgoing;relationship=owner"`
-	Balance            *Balance `gogm:"direction=outgoing;relationship=balance"`
-	Item               *Item    `gogm:"direction=incoming;relationship=account"`
+	Owner              *Owner       `gogm:"direction=outgoing;relationship=owner"`
+	Balance            *Balance     `gogm:"direction=outgoing;relationship=balance"`
+	Item               *Item        `gogm:"direction=incoming;relationship=account"`
+	Transaction        *Transaction `gogm:"direction=outgoing;relationship=transaction"`
+
+}
+
+type Transaction struct {
+	gogm.BaseNode
+
+	Name	       string    `gogm:"name=name"`
+	MerchantName   string    `gogm:"name=merchant"`
+	Ammount        float64   `gogm:"name=amount"`
+	Currency       string    `gogm:"name=currency"`
+	Category       []string 
+	CategoryID     []string 
+	Account        *Account  `gogm:"direction=incoming;relationship=transaction"`
+	Location       *Location `gogm:"direction=incoming;relationship=location"`
+	PaymentChannel string    `gogm:"name=type"`
+	Pending        bool 	 `gogm:"name=pending"`
+}
+
+type Location struct {
+	
 }
 
 type Balance struct {
