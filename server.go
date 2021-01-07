@@ -9,32 +9,51 @@ import (
 type tdString string
 type tdInt int
 
-type Institution struct {
-	// provides required node fields
+type User struct {
 	gogm.BaseNode
-	IntstitutionID string `gogm:"name=inst_id"`
-	Name           string `gogm:"name=name"`
-	Products       []string
-	PrimaryColor   string     `gogm:"name=prim_color"`
-	Logo           string     `gogm:"name=logo"`
-	Accounts       []*Account `gogm:"direction=outgoing;relationship=account"`
+	
+	UserID 	   string  `gogm:"name=user_id"`
+	Items      []*Item `gogm:"direction=outgoing;relationship=account"`
+}
+
+type Item struct {
+	gogm.BaseNode
+
+	User       *User      `gogm:"direction=outgoing;relationship=account"`
+	Account    []*Account `gogm:"direction=outgoing;relationship=account"`
+
 }
 
 type Account struct {
 	gogm.BaseNode
-	AccountID          string `gogm:"name=accnt_id"`
-	Name               string `gogm:"name=name"`
-	OfficialName       string `gogm:"name=offic_name"`
-	Type               string `gogm:"name=type"`
-	Subtype            string `gogm:"name=subtype"`
+
+	AccountID          string  		`gogm:"name=accnt_id"`
+	Name               string  		`gogm:"name=name"`
+	OfficialName       string  		`gogm:"name=offic_name"`
+	Type               string  		`gogm:"name=type"`
+	Subtype            string  		`gogm:"name=subtype"`
+	IntstitutionID	   string  		`gogm:"name=institution_id"`
 	VerificationStatus bool
 	Owner              *Owner       `gogm:"direction=outgoing;relationship=owner"`
 	Balance            *Balance     `gogm:"direction=outgoing;relationship=balance"`
 	Institution        *Institution `gogm:"direction=incoming;relationship=account"`
 }
 
+type Institution struct {
+	// provides required node fields
+	gogm.BaseNode
+
+	IntstitutionID string     `gogm:"name=inst_id"`
+	Name           string     `gogm:"name=name"`
+	Products       []string
+	PrimaryColor   string     `gogm:"name=prim_color"`
+	Logo           string     `gogm:"name=logo"`
+	Account       *Account    `gogm:"direction=outgoing;relationship=account"`
+}
+
 type Balance struct {
 	gogm.BaseNode
+
 	Available float64  `gogm:"name=avail"`
 	Current   float64  `gogm:"name=current"`
 	Limit     float64  `gogm:"name=limit"`
@@ -44,21 +63,24 @@ type Balance struct {
 
 type Owner struct {
 	gogm.BaseNode
+
 	Account      *Account       `gogm:"direction=incoming;relationship=owner"`
-	Names        *Name        `gogm:"direction=outgoing;relationship=name"`
-	PhoneNumbers *PhoneNumber `gogm:"direction=outgoing;relationship=number"`
-	Emails       *Email       `gogm:"direction=outgoing;relationship=email"`
-	Addresses    *Address     `gogm:"direction=outgoing;relationship=address"`
+	Names        []*Name        `gogm:"direction=outgoing;relationship=name"`
+	PhoneNumbers []*PhoneNumber `gogm:"direction=outgoing;relationship=number"`
+	Emails       []*Email       `gogm:"direction=outgoing;relationship=email"`
+	Addresses    []*Address     `gogm:"direction=outgoing;relationship=address"`
 }
 
 type Name struct {
 	gogm.BaseNode
+
 	FullName string `gogm:"name=limit"`
 	Owner    *Owner `gogm:"direction=incoming;relationship=name"`
 }
 
 type PhoneNumber struct {
 	gogm.BaseNode
+
 	Number  string `gogm:"name=number"`
 	Primary bool
 	Type    string `gogm:"name=type"`
@@ -67,6 +89,7 @@ type PhoneNumber struct {
 
 type Email struct {
 	gogm.BaseNode
+
 	Address string `gogm:"name=add"`
 	Primary bool
 	Type    string `gogm:"name=limit"`
@@ -75,6 +98,7 @@ type Email struct {
 
 type Address struct {
 	gogm.BaseNode
+	
 	City       string `gogm:"name=city"`
 	Region     string `gogm:"name=region"`
 	Street     string `gogm:"name=street"`
@@ -181,16 +205,10 @@ func main() {
 		Limit:     0,
 		Currency:  "USD",
 	}
-	// // declare array for owners
-	// var accountNames []*Name
-	// var accountPhoneNumber []*PhoneNumber
-	// var accountEmail []*Email
-	// var accountAddress []*Address
 
-	// array for instituion accounts
-	var accounts []*Account
 
 	// fill in data
+	n := &Name{FullName: "Monique"}
 	n1 := &Name{FullName: "Latasha"}
 	n2 := &Name{FullName: "Derrick"}
 	n3 := &Name{FullName: "Aldean"}
@@ -207,6 +225,11 @@ func main() {
 		Type:    "home",
 	}
 
+	p3 := &PhoneNumber{
+		Number:  "877-226-7723",
+		Primary: false,
+		Type:    "home",
+	}
 	e1 := &Email{
 		Address: "ddennat@qualia.com",
 		Primary: false,
@@ -215,6 +238,12 @@ func main() {
 
 	e2 := &Email{
 		Address: "loveurself@gmail.com",
+		Primary: false,
+		Type:    "secondary",
+	}
+
+	e3 := &Email{
+		Address: "hawtpower@foucault.com",
 		Primary: false,
 		Type:    "secondary",
 	}
@@ -229,36 +258,73 @@ func main() {
 
 	a2 := &Address{
 		City:       "Washington DC",
-		Region:     "District of Columbia",
+		Region:     "DC",
 		Street:     "123 Chocolate City Ave",
 		PostalCode: "12738",
 		Primary:    false,
 	}
 
+	a3 := &Address{
+		City:       "Dallas",
+		Region:     "TX",
+		Street:     "123 Aye Baybay",
+		PostalCode: "77232",
+		Primary:    false,
+	}
+
+	// declare array for owners
+	var accountNames []*Name
+	var accountPhoneNumber []*PhoneNumber
+	var accountEmail []*Email
+	var accountAddress []*Address
+
 	// append together for owners
-	// phoneNums := append(accountPhoneNumber, p1, p2)
-	// names := append(accountNames, n1, n2, n3)
-	// emails := append(accountEmail, e1, e2)
-	// addresses := append(accountAddress, a1, a2)
+	phoneNums := append(accountPhoneNumber, p1)
+	names := append(accountNames, n1, n)
+	emails := append(accountEmail, e1)
+	addresses := append(accountAddress, a1)
+
+	// declare array for owners
+	var accountNames2 []*Name
+	var accountPhoneNumber2 []*PhoneNumber
+	var accountEmail2 []*Email
+	var accountAddress2 []*Address
+
+	phoneNums2 := append(accountPhoneNumber2, p2)
+	names2 := append(accountNames2, n2)
+	emails2 := append(accountEmail2, e2)
+	addresses2 := append(accountAddress2, a2)
+
+	// declare array for owners
+	var accountNames3 []*Name
+	var accountPhoneNumber3 []*PhoneNumber
+	var accountEmail3 []*Email
+	var accountAddress3 []*Address
+
+	phoneNums3 := append(accountPhoneNumber3, p3)
+	names3 := append(accountNames3, n3)
+	emails3 := append(accountEmail3, e3)
+	addresses3 := append(accountAddress3, a3)
+
 
 	owners1 := &Owner{
-		Names:        n1,
-		PhoneNumbers: p1,
-		Emails:       e1,
-		Addresses:    a1,
+		Names:        names,
+		PhoneNumbers: phoneNums,
+		Emails:       emails,
+		Addresses:    addresses,
 	}
 
 	owners2 := &Owner{
-		Names:        n2,
-		PhoneNumbers: p2,
-		Emails:       e2,
-		Addresses:    a2,
+		Names:        names2,
+		PhoneNumbers: phoneNums2,
+		Emails:       emails2,
+		Addresses:    addresses2,
 	}
 	owners3 := &Owner{
-		Names:        n3,
-		PhoneNumbers: p1,
-		Emails:       e2,
-		Addresses:    a1,
+		Names:        names3,
+		PhoneNumbers: phoneNums3,
+		Emails:       emails3,
+		Addresses:    addresses3,
 	}
 
 	// set bi directional pointer
@@ -280,17 +346,19 @@ func main() {
 	owners3.Account = accountC
 	accountC.Owner = owners3
 
-	accountsInsA := append(accounts, accountA, accountB)
-	accountsInsB := append(accounts, accountC)
 
-	institutionA.Accounts = accountsInsA
-	institutionB.Accounts = accountsInsB
+	institutionA.Account = accountA
+	accountA.Institution = institutionA
 
-	err = sess.SaveDepth(institutionA, 2)
+
+	institutionB.Account = accountB
+	accountB.Institution = institutionB
+
+	err = sess.SaveDepth(institutionA, 5)
 	if err != nil {
 		panic(err)
 	}
-	err = sess.SaveDepth(institutionB, 2)
+	err = sess.SaveDepth(institutionB, 5)
 	if err != nil {
 		panic(err)
 	}
