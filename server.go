@@ -6,49 +6,46 @@ import (
 	"github.com/mindstand/gogm"
 )
 
-type tdString string
-type tdInt int
-
 type User struct {
 	gogm.BaseNode
-	
-	UserID 	   string  `gogm:"name=user_id"`
-	Items      []*Item `gogm:"direction=outgoing;relationship=account"`
+
+	UserID string  `gogm:"name=user_id"`
+	Items  []*Item `gogm:"direction=outgoing;relationship=item"`
 }
 
 type Item struct {
 	gogm.BaseNode
 
-	User       *User      `gogm:"direction=outgoing;relationship=account"`
-	Account    []*Account `gogm:"direction=outgoing;relationship=account"`
-
-}
-
-type Account struct {
-	gogm.BaseNode
-
-	AccountID          string  		`gogm:"name=accnt_id"`
-	Name               string  		`gogm:"name=name"`
-	OfficialName       string  		`gogm:"name=offic_name"`
-	Type               string  		`gogm:"name=type"`
-	Subtype            string  		`gogm:"name=subtype"`
-	IntstitutionID	   string  		`gogm:"name=institution_id"`
-	VerificationStatus bool
-	Owner              *Owner       `gogm:"direction=outgoing;relationship=owner"`
-	Balance            *Balance     `gogm:"direction=outgoing;relationship=balance"`
-	Institution        *Institution `gogm:"direction=incoming;relationship=account"`
+	User        *User        `gogm:"direction=incoming;relationship=item"`
+	Institution *Institution `gogm:"direction=outgoing;relationship=institution"`
+	Account     []*Account   `gogm:"direction=outgoing;relationship=account"`
 }
 
 type Institution struct {
 	// provides required node fields
 	gogm.BaseNode
 
-	IntstitutionID string     `gogm:"name=inst_id"`
-	Name           string     `gogm:"name=name"`
+	IntstitutionID string `gogm:"name=inst_id"`
+	Name           string `gogm:"name=name"`
 	Products       []string
-	PrimaryColor   string     `gogm:"name=prim_color"`
-	Logo           string     `gogm:"name=logo"`
-	Account       *Account    `gogm:"direction=outgoing;relationship=account"`
+	PrimaryColor   string `gogm:"name=prim_color"`
+	Logo           string `gogm:"name=logo"`
+	Item           *Item  `gogm:"direction=incoming;relationship=institution"`
+}
+
+type Account struct {
+	gogm.BaseNode
+
+	AccountID          string `gogm:"name=accnt_id"`
+	Name               string `gogm:"name=name"`
+	OfficialName       string `gogm:"name=offic_name"`
+	Type               string `gogm:"name=type"`
+	Subtype            string `gogm:"name=subtype"`
+	IntstitutionID     string `gogm:"name=institution_id"`
+	VerificationStatus bool
+	Owner              *Owner   `gogm:"direction=outgoing;relationship=owner"`
+	Balance            *Balance `gogm:"direction=outgoing;relationship=balance"`
+	Item               *Item    `gogm:"direction=incoming;relationship=account"`
 }
 
 type Balance struct {
@@ -98,7 +95,7 @@ type Email struct {
 
 type Address struct {
 	gogm.BaseNode
-	
+
 	City       string `gogm:"name=city"`
 	Region     string `gogm:"name=region"`
 	Street     string `gogm:"name=street"`
@@ -120,6 +117,8 @@ func main() {
 
 	err := gogm.Init(
 		&config,
+		&User{},
+		&Item{},
 		&Institution{},
 		&Account{},
 		&Balance{},
@@ -144,6 +143,7 @@ func main() {
 
 	// Create onjects to graph
 	var prods = []string{"auth", "tranactions", "identity"}
+
 	institutionA := &Institution{
 		IntstitutionID: "1",
 		Name:           "Bank of Dees Nutz Nigguh",
@@ -205,7 +205,6 @@ func main() {
 		Limit:     0,
 		Currency:  "USD",
 	}
-
 
 	// fill in data
 	n := &Name{FullName: "Monique"}
@@ -306,7 +305,6 @@ func main() {
 	emails3 := append(accountEmail3, e3)
 	addresses3 := append(accountAddress3, a3)
 
-
 	owners1 := &Owner{
 		Names:        names,
 		PhoneNumbers: phoneNums,
@@ -346,31 +344,58 @@ func main() {
 	owners3.Account = accountC
 	accountC.Owner = owners3
 
+	user1 := &User{
+		UserID: "1",
+	}
 
-	institutionA.Account = accountA
-	accountA.Institution = institutionA
+	user2 := &User{
+		UserID: "2",
+	}
+
+	i1 := &Item{}
+
+	i2 := &Item{}
 
 
-	institutionB.Account = accountB
-	accountB.Institution = institutionB
+	var listOfAccnt1 []*Account
+	var listOfAccnt2 []*Account
 
-	err = sess.SaveDepth(institutionA, 5)
+	accnts1 := append(listOfAccnt1, accountA, accountB)
+	accnts2 := append(listOfAccnt2, accountC)
+
+	i1.Account = accnts1
+	i1.Institution = institutionA
+
+	i2.Account = accnts2
+	i2.Institution = institutionB
+	
+	var listOfItems1 []*Item
+	var listOfItems2 []*Item
+	
+	item1 := append(listOfItems1, i1)
+	item2 := append(listOfItems2, i2)
+
+	user1.Items = item1
+	user2.Items = item2
+
+
+	err = sess.SaveDepth(user1, 8)
 	if err != nil {
 		panic(err)
 	}
-	err = sess.SaveDepth(institutionB, 5)
+	err = sess.SaveDepth(user2, 8)
 	if err != nil {
 		panic(err)
 	}
 	//load the object we just made (save will set the uuid)
-	var readin Institution
-	err = sess.Load(&readin, institutionA.UUID)
+	var readin User
+	err = sess.Load(&readin, user1.UUID)
 	if err != nil {
 		panic(err)
 	}
 	//load the object we just made (save will set the uuid)
-	var readin2 Institution
-	err = sess.Load(&readin2, institutionB.UUID)
+	var readin2 User
+	err = sess.Load(&readin2, user2.UUID)
 	if err != nil {
 		panic(err)
 	}
