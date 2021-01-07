@@ -155,7 +155,7 @@ func main() {
 	}
 
 	accountC := &Account{
-		AccountID:          "1",
+		AccountID:          "3",
 		Name:               "BBE Savings",
 		OfficialName:       "BBE Savings Account",
 		Type:               "depository",
@@ -280,7 +280,7 @@ func main() {
 	owners3.Accounts = accountC
 
 	accountsInsA := append(accounts, accountA, accountB)
-	accountsInsB := append(accounts, accountB, accountC)
+	accountsInsB := append(accounts,accountC)
 
 	institutionA.Accounts = accountsInsA
 	institutionB.Accounts = accountsInsB
