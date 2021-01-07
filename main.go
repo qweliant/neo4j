@@ -47,7 +47,7 @@ func main() {
 	// Create onjects to graph
 	var prods = []string{"auth", "tranactions", "identity"}
 
-	institutionA := &Institution{
+	institutionA := &models.Institution{
 		IntstitutionID: "1",
 		Name:           "Bank of Dees Nutz Nigguh",
 		Products:       prods,
@@ -55,7 +55,7 @@ func main() {
 		Logo:           "A image byte string was here",
 	}
 
-	institutionB := &Institution{
+	institutionB := &models.Institution{
 		IntstitutionID: "2",
 		Name:           "Bank of Black Excellence",
 		Products:       prods,
@@ -63,7 +63,7 @@ func main() {
 		Logo:           "A image byte string was here",
 	}
 
-	accountA := &Account{
+	accountA := &models.Account{
 		AccountID:          "1",
 		Name:               "BODNN Checking",
 		OfficialName:       "Checking Account",
@@ -72,7 +72,7 @@ func main() {
 		VerificationStatus: true,
 	}
 
-	accountB := &Account{
+	accountB := &models.Account{
 		AccountID:          "2",
 		Name:               "BODNN Savings",
 		OfficialName:       "Savings Account",
@@ -81,7 +81,7 @@ func main() {
 		VerificationStatus: true,
 	}
 
-	accountC := &Account{
+	accountC := &models.Account{
 		AccountID:          "3",
 		Name:               "BBE Savings",
 		OfficialName:       "BBE Savings Account",
@@ -90,19 +90,19 @@ func main() {
 		VerificationStatus: true,
 	}
 
-	balance1 := &Balance{
+	balance1 := &models.Balance{
 		Available: 110,
 		Current:   110,
 		Limit:     0,
 		Currency:  "USD",
 	}
-	balance2 := &Balance{
+	balance2 := &models.Balance{
 		Available: 110,
 		Current:   110,
 		Limit:     0,
 		Currency:  "USD",
 	}
-	balance3 := &Balance{
+	balance3 := &models.Balance{
 		Available: 110,
 		Current:   110,
 		Limit:     0,
@@ -110,47 +110,47 @@ func main() {
 	}
 
 	// fill in data
-	n := &Name{FullName: "Monique"}
-	n1 := &Name{FullName: "Latasha"}
-	n2 := &Name{FullName: "Derrick"}
-	n3 := &Name{FullName: "Aldean"}
+	n := &models.Name{FullName: "Monique"}
+	n1 := &models.Name{FullName: "Latasha"}
+	n2 := &models.Name{FullName: "Derrick"}
+	n3 := &models.Name{FullName: "Aldean"}
 
-	p1 := &PhoneNumber{
+	p1 := &models.PhoneNumber{
 		Number:  "961-867-5309",
 		Primary: false,
 		Type:    "cell",
 	}
 
-	p2 := &PhoneNumber{
+	p2 := &models.PhoneNumber{
 		Number:  "281-330-8004",
 		Primary: false,
 		Type:    "home",
 	}
 
-	p3 := &PhoneNumber{
+	p3 := &models.PhoneNumber{
 		Number:  "877-226-7723",
 		Primary: false,
 		Type:    "home",
 	}
-	e1 := &Email{
+	e1 := &models.Email{
 		Address: "ddennat@qualia.com",
 		Primary: false,
 		Type:    "primary",
 	}
 
-	e2 := &Email{
+	e2 := &models.Email{
 		Address: "loveurself@gmail.com",
 		Primary: false,
 		Type:    "secondary",
 	}
 
-	e3 := &Email{
+	e3 := &models.Email{
 		Address: "hawtpower@foucault.com",
 		Primary: false,
 		Type:    "secondary",
 	}
 
-	a1 := &Address{
+	a1 := &models.Address{
 		City:       "Atlanta",
 		Region:     "GA",
 		Street:     "1017 Brick Rd, 745",
@@ -158,7 +158,7 @@ func main() {
 		Primary:    true,
 	}
 
-	a2 := &Address{
+	a2 := &models.Address{
 		City:       "Washington DC",
 		Region:     "DC",
 		Street:     "123 Chocolate City Ave",
@@ -166,7 +166,7 @@ func main() {
 		Primary:    false,
 	}
 
-	a3 := &Address{
+	a3 := &models.Address{
 		City:       "Dallas",
 		Region:     "TX",
 		Street:     "123 Aye Baybay",
@@ -175,10 +175,10 @@ func main() {
 	}
 
 	// declare array for owners
-	var accountNames []*Name
-	var accountPhoneNumber []*PhoneNumber
-	var accountEmail []*Email
-	var accountAddress []*Address
+	var accountNames []*models.Name
+	var accountPhoneNumber []*models.PhoneNumber
+	var accountEmail []*models.Email
+	var accountAddress []*models.Address
 
 	// append together for owners
 	phoneNums := append(accountPhoneNumber, p1)
@@ -187,10 +187,10 @@ func main() {
 	addresses := append(accountAddress, a1)
 
 	// declare array for owners
-	var accountNames2 []*Name
-	var accountPhoneNumber2 []*PhoneNumber
-	var accountEmail2 []*Email
-	var accountAddress2 []*Address
+	var accountNames2 []*models.Name
+	var accountPhoneNumber2 []*models.PhoneNumber
+	var accountEmail2 []*models.Email
+	var accountAddress2 []*models.Address
 
 	phoneNums2 := append(accountPhoneNumber2, p2)
 	names2 := append(accountNames2, n2)
@@ -198,30 +198,30 @@ func main() {
 	addresses2 := append(accountAddress2, a2)
 
 	// declare array for owners
-	var accountNames3 []*Name
-	var accountPhoneNumber3 []*PhoneNumber
-	var accountEmail3 []*Email
-	var accountAddress3 []*Address
+	var accountNames3 []*models.Name
+	var accountPhoneNumber3 []*models.PhoneNumber
+	var accountEmail3 []*models.Email
+	var accountAddress3 []*models.Address
 
 	phoneNums3 := append(accountPhoneNumber3, p3)
 	names3 := append(accountNames3, n3)
 	emails3 := append(accountEmail3, e3)
 	addresses3 := append(accountAddress3, a3)
 
-	owners1 := &Owner{
+	owners1 := &models.Owner{
 		Names:        names,
 		PhoneNumbers: phoneNums,
 		Emails:       emails,
 		Addresses:    addresses,
 	}
 
-	owners2 := &Owner{
+	owners2 := &models.Owner{
 		Names:        names2,
 		PhoneNumbers: phoneNums2,
 		Emails:       emails2,
 		Addresses:    addresses2,
 	}
-	owners3 := &Owner{
+	owners3 := &models.Owner{
 		Names:        names3,
 		PhoneNumbers: phoneNums3,
 		Emails:       emails3,
@@ -247,20 +247,20 @@ func main() {
 	owners3.Account = accountC
 	accountC.Owner = owners3
 
-	user1 := &User{
+	user1 := &models.User{
 		UserID: "1",
 	}
 
-	user2 := &User{
+	user2 := &models.User{
 		UserID: "2",
 	}
 
-	i1 := &Item{}
+	i1 := &models.Item{}
 
-	i2 := &Item{}
+	i2 := &models.Item{}
 
-	var listOfAccnt1 []*Account
-	var listOfAccnt2 []*Account
+	var listOfAccnt1 []*models.Account
+	var listOfAccnt2 []*models.Account
 
 	accnts1 := append(listOfAccnt1, accountA, accountB)
 	accnts2 := append(listOfAccnt2, accountC)
@@ -271,8 +271,8 @@ func main() {
 	i2.Account = accnts2
 	i2.Institution = institutionB
 
-	var listOfItems1 []*Item
-	var listOfItems2 []*Item
+	var listOfItems1 []*models.Item
+	var listOfItems2 []*models.Item
 
 	item1 := append(listOfItems1, i1)
 	item2 := append(listOfItems2, i2)
@@ -289,13 +289,13 @@ func main() {
 		panic(err)
 	}
 	//load the object we just made (save will set the uuid)
-	var readin User
+	var readin models.User
 	err = sess.Load(&readin, user1.UUID)
 	if err != nil {
 		panic(err)
 	}
 	//load the object we just made (save will set the uuid)
-	var readin2 User
+	var readin2 models.User
 	err = sess.Load(&readin2, user2.UUID)
 	if err != nil {
 		panic(err)
