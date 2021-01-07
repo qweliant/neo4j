@@ -4,13 +4,8 @@ import (
 	"fmt"
 
 	"github.com/mindstand/gogm"
+	"github.com/tapfunds/tfapi/api/models"
 )
-
-type Location struct {
-	
-}
-
-
 
 func main() {
 	config := gogm.Config{
@@ -25,16 +20,16 @@ func main() {
 
 	err := gogm.Init(
 		&config,
-		&User{},
-		&Item{},
-		&Institution{},
-		&Account{},
-		&Balance{},
-		&Owner{},
-		&Name{},
-		&PhoneNumber{},
-		&Email{},
-		&Address{},
+		&models.User{},
+		&models.Item{},
+		&models.Institution{},
+		&models.Account{},
+		&models.Balance{},
+		&models.Owner{},
+		&models.Name{},
+		&models.PhoneNumber{},
+		&models.Email{},
+		&models.Address{},
 	)
 	if err != nil {
 		panic(err)
@@ -264,7 +259,6 @@ func main() {
 
 	i2 := &Item{}
 
-
 	var listOfAccnt1 []*Account
 	var listOfAccnt2 []*Account
 
@@ -276,16 +270,15 @@ func main() {
 
 	i2.Account = accnts2
 	i2.Institution = institutionB
-	
+
 	var listOfItems1 []*Item
 	var listOfItems2 []*Item
-	
+
 	item1 := append(listOfItems1, i1)
 	item2 := append(listOfItems2, i2)
 
 	user1.Items = item1
 	user2.Items = item2
-
 
 	err = sess.SaveDepth(user1, 8)
 	if err != nil {
