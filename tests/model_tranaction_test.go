@@ -2,7 +2,7 @@ package tests
 
 import (
 	"testing"
-
+	"fmt"
 	"github.com/qweliant/neo4j/models"
 	"github.com/stretchr/testify/assert"
 )
@@ -31,4 +31,30 @@ func TestFindAllTransactions(t *testing.T) {
 
 	// two users created
 	assert.Equal(t, len(readin), 6)
+}
+
+func TestSaveTransaction(t *testing.T) {
+	err := refreshTapNodes(sess)
+	if err != nil {
+		t.Errorf("this is the error getting the users: %v\n", err)
+		return
+	}
+
+	//seed db
+	id, err := seedMultipleNodes(sess)
+	if err != nil {
+		t.Errorf("this is the error getting the users: %v\n", err)
+		return
+	}
+
+	var readin models.User
+	err = sess.Load(&readin, id)
+	if err != nil {
+		t.Errorf("The error getting the users: %v\n", err)
+		return
+	} 
+
+	fmt.Println(readin.Items[0].Account[0])
+	assert.Equal(t, 6, 6)
+
 }
