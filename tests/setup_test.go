@@ -63,6 +63,7 @@ func refreshTapNodes(s *gogm.Session) error {
 
 func seedMultipleNodes(sess *gogm.Session) (string, error) {
 	var prods = []string{"auth", "tranactions", "identity"}
+	var cats = []string{"Shops", "Computers and Electronics"}
 
 	institutionA := &models.Institution{
 		IntstitutionID: "1",
@@ -110,21 +111,121 @@ func seedMultipleNodes(sess *gogm.Session) (string, error) {
 	balance1 := &models.Balance{
 		Available: 110,
 		Current:   110,
-		Limit:     0,
+		Limit:     4345,
 		Currency:  "USD",
 	}
 	balance2 := &models.Balance{
-		Available: 110,
-		Current:   110,
+		Available: 300,
+		Current:   300,
 		Limit:     0,
 		Currency:  "USD",
 	}
 	balance3 := &models.Balance{
-		Available: 110,
-		Current:   110,
+		Available: 12,
+		Current:   45,
 		Limit:     0,
 		Currency:  "USD",
 	}
+
+	location := &models.Location{
+		Address:     "123 Forest Road",
+		City:        "Seattle",
+		Region:      "WA",
+		PostalCode:  "12345",
+		Country:     "US",
+		StoreNumber: "1235",
+		Lat:         40.740352,
+		Lon:         -74.001761,
+	}
+
+	location2 := &models.Location{
+		Address:     "123 Forest Road",
+		City:        "Seattle",
+		Region:      "WA",
+		PostalCode:  "12345",
+		Country:     "US",
+		StoreNumber: "1235",
+		Lat:         40.740352,
+		Lon:         -74.001761,
+	}
+
+	transaction := &models.Transaction{
+		Name:           "Apple Store",
+		MerchantName:   "Apple",
+		Ammount:        2307.23,
+		Currency:       "USD",
+		Category:       cats,
+		PaymentChannel: "in store",
+		Pending:        false,
+		Location:       location,
+		Account:        accountA,
+	}
+
+	transaction2 := &models.Transaction{
+		Name:           "Google Store",
+		MerchantName:   "Google",
+		Ammount:        207.47,
+		Currency:       "USD",
+		Category:       cats,
+		PaymentChannel: "in store",
+		Pending:        false,
+		Location:       location,
+		Account:        accountA,
+	}
+
+	transaction3 := &models.Transaction{
+		Name:           "Amazon Store",
+		MerchantName:   "Amazon",
+		Ammount:        42.83,
+		Currency:       "USD",
+		Category:       cats,
+		PaymentChannel: "in store",
+		Pending:        false,
+		Location:       location,
+		Account:        accountA,
+	}
+
+	transaction4 := &models.Transaction{
+		Name:           "Apple Store",
+		MerchantName:   "Apple",
+		Ammount:        2307.23,
+		Currency:       "USD",
+		Category:       cats,
+		PaymentChannel: "in store",
+		Pending:        false,
+		Location:       location2,
+		Account:        accountB,
+	}
+
+	transaction5 := &models.Transaction{
+		Name:           "Google Store",
+		MerchantName:   "Google",
+		Ammount:        207.47,
+		Currency:       "USD",
+		Category:       cats,
+		PaymentChannel: "in store",
+		Pending:        false,
+		Location:       location2,
+		Account:        accountB,
+	}
+
+	transaction6 := &models.Transaction{
+		Name:           "Amazon Store",
+		MerchantName:   "Amazon",
+		Ammount:        42.83,
+		Currency:       "USD",
+		Category:       cats,
+		PaymentChannel: "in store",
+		Pending:        false,
+		Location:       location2,
+		Account:        accountB,
+	}
+
+	var accountTransactions []*models.Transaction
+	accntTransactions := append(accountTransactions, transaction, transaction2, transaction3)
+
+	var accountTransactions2 []*models.Transaction
+	accntTransactions2 := append(accountTransactions2, transaction4, transaction5, transaction6)
 
 	// fill in data
 	n := &models.Name{FullName: "Monique"}
@@ -248,9 +349,11 @@ func seedMultipleNodes(sess *gogm.Session) (string, error) {
 	// set bi directional pointer
 	accountA.Balance = balance1
 	balance1.Account = accountA
+	accountA.Transactions = accntTransactions
 
 	accountB.Balance = balance2
 	balance2.Account = accountB
+	accountB.Transactions = accntTransactions2
 
 	accountC.Balance = balance3
 	balance3.Account = accountC
@@ -273,7 +376,6 @@ func seedMultipleNodes(sess *gogm.Session) (string, error) {
 	}
 
 	i1 := &models.Item{}
-
 	i2 := &models.Item{}
 
 	var listOfAccnt1 []*models.Account
@@ -360,7 +462,6 @@ func seedOneNode(sess *gogm.Session) (string, error) {
 		Primary:    false,
 	}
 
-
 	// declare array for owners
 	var accountNames3 []*models.Name
 	var accountPhoneNumber3 []*models.PhoneNumber
@@ -387,11 +488,9 @@ func seedOneNode(sess *gogm.Session) (string, error) {
 	owners3.Account = accountC
 	accountC.Owner = owners3
 
-
 	user2 := &models.User{
 		UserID: "1",
 	}
-
 
 	i2 := &models.Item{}
 
@@ -408,10 +507,9 @@ func seedOneNode(sess *gogm.Session) (string, error) {
 
 	user2.Items = item2
 
-
 	err = sess.SaveDepth(user2, 8)
 	if err != nil {
-		panic( err)
+		panic(err)
 	}
 
 	fmt.Println("Done Seeding")
