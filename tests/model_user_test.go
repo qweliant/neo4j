@@ -161,4 +161,5 @@ func TestDeleteUser(t *testing.T) {
 	_ = sess.Load(&readBackIn, id)
 	
 	assert.NotEqual(t, readBackIn.UUID, id)
+	
 }

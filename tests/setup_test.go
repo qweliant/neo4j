@@ -67,7 +67,7 @@ func seedMultipleNodes(sess *gogm.Session) (string, error) {
 
 	institutionA := &models.Institution{
 		IntstitutionID: "1",
-		Name:           "Bank of Dees Nutz Nigguh",
+		Name:           "Bank of Dees",
 		Products:       prods,
 		PrimaryColor:   "red",
 		Logo:           "A image byte string was here",
@@ -375,8 +375,7 @@ func seedMultipleNodes(sess *gogm.Session) (string, error) {
 		UserID: "2",
 	}
 
-	i1 := &models.Item{}
-	i2 := &models.Item{}
+	
 
 	var listOfAccnt1 []*models.Account
 	var listOfAccnt2 []*models.Account
@@ -384,11 +383,20 @@ func seedMultipleNodes(sess *gogm.Session) (string, error) {
 	accnts1 := append(listOfAccnt1, accountA, accountB)
 	accnts2 := append(listOfAccnt2, accountC)
 
-	i1.Account = accnts1
-	i1.Institution = institutionA
+	i1 := &models.Item{
+		Institution: institutionA,
+	}
+	i2 := &models.Item{
+		Institution: institutionB,
+	}
+	accountA.Item = i1
 
-	i2.Account = accnts2
-	i2.Institution = institutionB
+	accountB.Item = i1
+	i1.Accounts = accnts1
+
+	accountC.Item = i2
+	i2.Accounts = accnts2
+
 
 	var listOfItems1 []*models.Item
 	var listOfItems2 []*models.Item
@@ -399,11 +407,11 @@ func seedMultipleNodes(sess *gogm.Session) (string, error) {
 	user1.Items = item1
 	user2.Items = item2
 
-	err := sess.SaveDepth(user1, 8)
+	err := sess.SaveDepth(user1, 10)
 	if err != nil {
 		panic(err)
 	}
-	err = sess.SaveDepth(user2, 8)
+	err = sess.SaveDepth(user2, 10)
 	if err != nil {
 		panic(err)
 	}
@@ -498,7 +506,7 @@ func seedOneNode(sess *gogm.Session) (string, error) {
 
 	accnts2 := append(listOfAccnt2, accountC)
 
-	i2.Account = accnts2
+	i2.Accounts = accnts2
 	i2.Institution = institutionB
 
 	var listOfItems2 []*models.Item
