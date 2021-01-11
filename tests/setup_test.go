@@ -30,6 +30,8 @@ func Database() (*gogm.Session, error) {
 		&models.PhoneNumber{},
 		&models.Email{},
 		&models.Address{},
+		&models.Location{},
+		&models.Transaction{},
 	)
 	if err != nil {
 		panic(err)
@@ -54,7 +56,7 @@ func refreshTapNodes(s *gogm.Session) error {
 
 	err = s.PurgeDatabase()
 	if err != nil {
-		return err
+		panic(err)
 	}
 	return nil
 }
@@ -297,18 +299,18 @@ func seedTapNodes(sess *gogm.Session) error {
 
 	err := sess.SaveDepth(user1, 8)
 	if err != nil {
-		return err
+		panic(err)
 	}
 	err = sess.SaveDepth(user2, 8)
 	if err != nil {
-		return err
+		panic(err)
 	}
 
 	fmt.Println("Done")
 	return nil
 }
 
-func seedOneNode(sess *gogm.Session) error {
+func seedOneNode(sess *gogm.Session) (string, error) {
 	var prods = []string{"auth", "tranactions", "identity"}
 
 	institutionB := &models.Institution{
@@ -409,9 +411,9 @@ func seedOneNode(sess *gogm.Session) error {
 
 	err = sess.SaveDepth(user2, 8)
 	if err != nil {
-		return err
+		panic( err)
 	}
 
 	fmt.Println("Done")
-	return nil
+	return user2.UUID, nil
 }
