@@ -290,17 +290,5 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	//load the object we just made (save will set the uuid)
-	var readin models.User
-	err = sess.Load(&readin, user1.UUID)
-	if err != nil {
-		panic(err)
-	}
-	//load the object we just made (save will set the uuid)
-	var readin2 models.User
-	err = sess.Load(&readin2, user2.UUID)
-	if err != nil {
-		panic(err)
-	}
 	fmt.Println("Done")
 }
