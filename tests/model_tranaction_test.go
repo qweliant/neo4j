@@ -93,7 +93,6 @@ func TestAddUserTransaction(t *testing.T) {
 		t.Errorf("The error getting the users: %v\n", err)
 		return
 	}
-	fmt.Println(user.Items[0].Accounts)
 
 	// I have user, but here i have to use account id (accounts aren't on items?), then look at tranactaions
 	// will hard code for now but know this is need for api req
@@ -106,8 +105,10 @@ func TestAddUserTransaction(t *testing.T) {
 		t.Errorf("The error getting the users: %v\n", err)
 		return
 	}
+	
+	assert.Equal(t, len(readin), 3)
 
-	transaction6 := models.Transaction{
+	transaction6 := &models.Transaction{
 		Name:           "Netflix Subscription",
 		MerchantName:   "Netflix",
 		Ammount:        10.13,
@@ -116,12 +117,10 @@ func TestAddUserTransaction(t *testing.T) {
 		Pending:        false,
 	}
 
-	readin = append(readin, transaction6)
+	readin = append(readin, *transaction6)
 	fmt.Println(readin)
-	err = sess.Save(&readin)
-	if err != nil {
-		panic(err)
-	}
-	assert.Equal(t, 4, 4)
+	
+	
+	assert.Equal(t, len(readin), 4)
 
 }
