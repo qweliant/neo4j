@@ -61,7 +61,7 @@ func refreshTapNodes(s *gogm.Session) error {
 	return nil
 }
 
-func seedTapNodes(sess *gogm.Session) error {
+func seedMultipleNodes(sess *gogm.Session) (string, error) {
 	var prods = []string{"auth", "tranactions", "identity"}
 
 	institutionA := &models.Institution{
@@ -306,8 +306,8 @@ func seedTapNodes(sess *gogm.Session) error {
 		panic(err)
 	}
 
-	fmt.Println("Done")
-	return nil
+	fmt.Println("Done Seeding")
+	return user2.UUID, nil
 }
 
 func seedOneNode(sess *gogm.Session) (string, error) {
@@ -414,6 +414,6 @@ func seedOneNode(sess *gogm.Session) (string, error) {
 		panic( err)
 	}
 
-	fmt.Println("Done")
+	fmt.Println("Done Seeding")
 	return user2.UUID, nil
 }

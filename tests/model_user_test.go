@@ -6,6 +6,7 @@ This would be something like a CREATE and READ method
 */
 
 import (
+	"fmt"
 	"testing"
 
 	"github.com/qweliant/neo4j/models"
@@ -20,7 +21,7 @@ func TestFindAllUsers(t *testing.T) {
 	}
 
 	//seed db
-	err = seedTapNodes(sess)
+	_, err = seedMultipleNodes(sess)
 	if err != nil {
 		t.Errorf("this is the error getting the users: %v\n", err)
 		return
@@ -136,22 +137,28 @@ func TestDeleteUser(t *testing.T) {
 	}
 
 	//seed db
-	_, err = seedOneNode(sess)
+	id, err := seedMultipleNodes(sess)
 	if err != nil {
 		t.Errorf("this is the error getting the users: %v\n", err)
 		return
 	}
 
+
 	var readin models.User
-	err = sess.Delete(&readin)
-	if err != nil {
-		t.Errorf("The error delting the user: %v\n", err)
-		return
-	}
-	
-	err = sess.DeleteUUID(readin.UUID)
+	err = sess.Load(&readin, id)
 	if err != nil {
 		t.Errorf("The error getting the users: %v\n", err)
 		return
 	}
+	assert.Equal(t, readin.UUID, id)
+
+	// will get an error that kicks out of test because nothing returned
+	query := fmt.Sprintf("MATCH (n:User {uuid: '%s'})-[*0..]->(x) DETACH DELETE x", id)
+	_ = sess.Query(query, nil, readin)
+
+	// doesnt ret anything because of deletion
+	var readBackIn models.User
+	_ = sess.Load(&readBackIn, id)
+	
+	assert.NotEqual(t, readBackIn.UUID, id)
 }
