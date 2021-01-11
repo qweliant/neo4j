@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/mindstand/gogm"
-	"github.com/tapfunds/tfapi/api/models"
+	"github.com/qweliant/neo4j/models"
 )
 
 func main() {
@@ -30,6 +30,8 @@ func main() {
 		&models.PhoneNumber{},
 		&models.Email{},
 		&models.Address{},
+		&models.Location{},
+		&models.Transaction{},
 	)
 	if err != nil {
 		panic(err)
@@ -49,7 +51,7 @@ func main() {
 
 	institutionA := &models.Institution{
 		IntstitutionID: "1",
-		Name:           "Bank of Dees Nutz Nigguh",
+		Name:           "Bank of Wakanda",
 		Products:       prods,
 		PrimaryColor:   "red",
 		Logo:           "A image byte string was here",
