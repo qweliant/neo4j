@@ -7,5 +7,5 @@ type Item struct {
 
 	User        *User        `gogm:"direction=incoming;relationship=item"`
 	Institution *Institution `gogm:"direction=outgoing;relationship=institution"`
-	Account     []*Account   `gogm:"direction=outgoing;relationship=account"`
+	Accounts     []*Account   `gogm:"direction=outgoing;relationship=account"`
 }
