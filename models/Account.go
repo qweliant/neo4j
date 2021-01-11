@@ -15,5 +15,5 @@ type Account struct {
 	Owner              *Owner         `gogm:"direction=outgoing;relationship=owner"`
 	Balance            *Balance       `gogm:"direction=outgoing;relationship=balance"`
 	Item               *Item          `gogm:"direction=incoming;relationship=account"`
-	Transactions       []*Transaction `gogm:"direction=incoming;relationship=transaction"`
+	Transactions       []*Transaction `gogm:"direction=outgoing;relationship=transaction"`
 }
