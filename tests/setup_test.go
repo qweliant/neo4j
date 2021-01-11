@@ -46,17 +46,17 @@ func Database() (*gogm.Session, error) {
 	return sess, nil
 }
 
-func refreshTapNodes() (*gogm.Session, error) {
-	sess, err := Database()
-	if err != nil {
-		return sess, err
-	}
+var (
+	sess, err = Database()
+)
 
-	err = sess.PurgeDatabase()
+func refreshTapNodes(s *gogm.Session) error {
+
+	err = s.PurgeDatabase()
 	if err != nil {
-		return sess, err
+		return err
 	}
-	return sess, nil
+	return nil
 }
 
 func seedTapNodes(sess *gogm.Session) error {
@@ -303,18 +303,115 @@ func seedTapNodes(sess *gogm.Session) error {
 	if err != nil {
 		return err
 	}
-	//load the object we just made (save will set the uuid)
-	var readin models.User
-	err = sess.Load(&readin, user1.UUID)
+
+	fmt.Println("Done")
+	return nil
+}
+
+func seedOneNode(sess *gogm.Session) error {
+	var prods = []string{"auth", "tranactions", "identity"}
+
+	institutionB := &models.Institution{
+		IntstitutionID: "2",
+		Name:           "Bank of Black Excellence",
+		Products:       prods,
+		PrimaryColor:   "black",
+		Logo:           "A image byte string was here",
+	}
+
+	accountC := &models.Account{
+		AccountID:          "3",
+		Name:               "BBE Savings",
+		OfficialName:       "BBE Savings Account",
+		Type:               "depository",
+		Subtype:            "savings",
+		VerificationStatus: true,
+	}
+
+	balance3 := &models.Balance{
+		Available: 110,
+		Current:   110,
+		Limit:     0,
+		Currency:  "USD",
+	}
+
+	// fill in data
+	n3 := &models.Name{FullName: "Aldean"}
+
+	p3 := &models.PhoneNumber{
+		Number:  "877-226-7723",
+		Primary: false,
+		Type:    "home",
+	}
+
+	e3 := &models.Email{
+		Address: "hawtpower@foucault.com",
+		Primary: false,
+		Type:    "secondary",
+	}
+
+	a3 := &models.Address{
+		City:       "Dallas",
+		Region:     "TX",
+		Street:     "123 Aye Baybay",
+		PostalCode: "77232",
+		Primary:    false,
+	}
+
+
+	// declare array for owners
+	var accountNames3 []*models.Name
+	var accountPhoneNumber3 []*models.PhoneNumber
+	var accountEmail3 []*models.Email
+	var accountAddress3 []*models.Address
+
+	phoneNums3 := append(accountPhoneNumber3, p3)
+	names3 := append(accountNames3, n3)
+	emails3 := append(accountEmail3, e3)
+	addresses3 := append(accountAddress3, a3)
+
+	owners3 := &models.Owner{
+		Names:        names3,
+		PhoneNumbers: phoneNums3,
+		Emails:       emails3,
+		Addresses:    addresses3,
+	}
+
+	// set bi directional pointer
+
+	accountC.Balance = balance3
+	balance3.Account = accountC
+
+	owners3.Account = accountC
+	accountC.Owner = owners3
+
+
+	user2 := &models.User{
+		UserID: "1",
+	}
+
+
+	i2 := &models.Item{}
+
+	var listOfAccnt2 []*models.Account
+
+	accnts2 := append(listOfAccnt2, accountC)
+
+	i2.Account = accnts2
+	i2.Institution = institutionB
+
+	var listOfItems2 []*models.Item
+
+	item2 := append(listOfItems2, i2)
+
+	user2.Items = item2
+
+
+	err = sess.SaveDepth(user2, 8)
 	if err != nil {
 		return err
 	}
-	//load the object we just made (save will set the uuid)
-	var readin2 models.User
-	err = sess.Load(&readin2, user2.UUID)
-	if err != nil {
-		return err
-	}
+
 	fmt.Println("Done")
 	return nil
 }
