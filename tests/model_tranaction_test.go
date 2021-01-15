@@ -55,7 +55,6 @@ func TestFindUserTransaction(t *testing.T) {
 		t.Errorf("The error getting the users: %v\n", err)
 		return
 	}
-	fmt.Println(user.Items[0].Accounts)
 
 	// I have user, but here i have to use account id (accounts aren't on items?), then look at tranactaions
 	// will hard code for now but know this is need for api req
@@ -118,7 +117,6 @@ func TestAddUserTransaction(t *testing.T) {
 	}
 
 	readin = append(readin, *transaction6)
-	fmt.Println(readin)
 	
 	
 	assert.Equal(t, len(readin), 4)

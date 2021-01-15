@@ -45,6 +45,6 @@ func main() {
 
 	//close the session
 	defer sess.Close()
-
+ 
 	fmt.Println("Done")
 }
