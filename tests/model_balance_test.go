@@ -30,4 +30,6 @@ func TestFindAllBalances(t *testing.T) {
 	}
 
 	assert.Equal(t, len(readin), 3)
+	err = refreshNodes(sess)
+
 }

@@ -37,6 +37,8 @@ func TestFindAllUsers(t *testing.T) {
 
 	// two users created
 	assert.Equal(t, len(readin), 2)
+	err = refreshNodes(sess)
+
 }
 
 func TestSaveUser(t *testing.T) {
@@ -61,6 +63,7 @@ func TestSaveUser(t *testing.T) {
 	}
 
 	assert.Equal(t, len(readin), 1)
+	err = refreshNodes(sess)
 
 }
 
@@ -85,6 +88,8 @@ func TestFindUserByID(t *testing.T) {
 		return
 	}
 	assert.Equal(t, readin.UUID, id)
+	err = refreshNodes(sess)
+
 }
 
 func TestUpdateUser(t *testing.T) {
@@ -126,6 +131,7 @@ func TestUpdateUser(t *testing.T) {
 		return
 	}
 	assert.NotEqual(t, readBackIn.UserID, copy.UserID)
+	err = refreshNodes(sess)
 
 }
 
@@ -160,5 +166,6 @@ func TestDeleteUser(t *testing.T) {
 	_ = sess.Load(&readBackIn, id)
 
 	assert.NotEqual(t, readBackIn.UUID, id)
+	err = refreshNodes(sess)
 
 }

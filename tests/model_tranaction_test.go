@@ -32,6 +32,8 @@ func TestFindAllTransactions(t *testing.T) {
 
 	// two users created
 	assert.Equal(t, len(readin), 6)
+	err = refreshNodes(sess)
+
 }
 
 // gets transactions for account id
@@ -69,6 +71,7 @@ func TestFindUserTransaction(t *testing.T) {
 	}
 
 	assert.Equal(t, len(readin), 3)
+	err = refreshNodes(sess)
 
 }
 
@@ -119,5 +122,6 @@ func TestAddUserTransaction(t *testing.T) {
 	readin = append(readin, *transaction6)
 
 	assert.Equal(t, len(readin), 4)
+	err = refreshNodes(sess)
 
 }
