@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/mindstand/gogm"
-	"github.com/qweliant/neo4j/models"
+	"github.com/qweliant/neo4j/api/models"
 )
 
 func main() {

@@ -1,16 +1,15 @@
 package controllers
 
 import (
-	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
-	"io/ioutil"
 
 	"github.com/gin-gonic/gin"
 	"github.com/mindstand/gogm"
 
-	"github.com/qweliant/neo4j/middlewares"
-	"github.com/qweliant/neo4j/models"
+	"github.com/qweliant/neo4j/api/middlewares"
+	"github.com/qweliant/neo4j/api/models"
 )
 
 
@@ -67,4 +66,20 @@ func (server *Server) Database() {
 
 func (server *Server) Run(addr string) {
 	log.Fatal(http.ListenAndServe(addr, server.Router))
+}
+
+func (server *Server) Status(c *gin.Context){
+
+	_, err := ioutil.ReadAll(c.Request.Body)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"status":      http.StatusBadRequest,
+			"error": "The world has falllen and we are to slumber...",
+		})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"status":   http.StatusOK,
+	})
 }

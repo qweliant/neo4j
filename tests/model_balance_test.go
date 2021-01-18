@@ -3,7 +3,7 @@ package tests
 import (
 	"testing"
 
-	"github.com/qweliant/neo4j/models"
+	"github.com/qweliant/neo4j/api/models"
 	"github.com/stretchr/testify/assert"
 )
 

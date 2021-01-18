@@ -9,7 +9,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/qweliant/neo4j/models"
+	"github.com/qweliant/neo4j/api/models"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -143,7 +143,6 @@ func TestDeleteUser(t *testing.T) {
 		return
 	}
 
-
 	var readin models.User
 	err = sess.Load(&readin, id)
 	if err != nil {
@@ -159,7 +158,7 @@ func TestDeleteUser(t *testing.T) {
 	// doesnt ret anything because of deletion
 	var readBackIn models.User
 	_ = sess.Load(&readBackIn, id)
-	
+
 	assert.NotEqual(t, readBackIn.UUID, id)
-	
+
 }

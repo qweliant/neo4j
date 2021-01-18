@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"testing"
 
-	"github.com/qweliant/neo4j/models"
+	"github.com/qweliant/neo4j/api/models"
 	"github.com/stretchr/testify/assert"
 )
 
@@ -104,7 +104,7 @@ func TestAddUserTransaction(t *testing.T) {
 		t.Errorf("The error getting the users: %v\n", err)
 		return
 	}
-	
+
 	assert.Equal(t, len(readin), 3)
 
 	transaction6 := &models.Transaction{
@@ -117,8 +117,7 @@ func TestAddUserTransaction(t *testing.T) {
 	}
 
 	readin = append(readin, *transaction6)
-	
-	
+
 	assert.Equal(t, len(readin), 4)
 
 }

@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/mindstand/gogm"
-	"github.com/qweliant/neo4j/models"
+	"github.com/qweliant/neo4j/api/models"
 )
 
 func Database() (*gogm.Session, error) {
@@ -375,8 +375,6 @@ func seedMultipleNodes(sess *gogm.Session) (string, error) {
 		UserID: "2",
 	}
 
-	
-
 	var listOfAccnt1 []*models.Account
 	var listOfAccnt2 []*models.Account
 
@@ -396,7 +394,6 @@ func seedMultipleNodes(sess *gogm.Session) (string, error) {
 
 	accountC.Item = i2
 	i2.Accounts = accnts2
-
 
 	var listOfItems1 []*models.Item
 	var listOfItems2 []*models.Item
