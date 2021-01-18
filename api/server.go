@@ -27,7 +27,7 @@ func Run() {
 		log.Fatalf("Error getting env, %v", err)
 	}
 
-	server.Database(os.Getenv(os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"))
+	server.Database(os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"))
 
 	// This is for testing, when done, do well to comment
 	// seed.Load(server.DB)
@@ -37,5 +37,4 @@ func Run() {
 
 	server.Run(apiPort)
 	fmt.Printf("Listening to port %d", apiPort)
-
 }
