@@ -1,28 +1,54 @@
 # GraphQL schema example
 #
 # https://gqlgen.com/getting-started/
-
-type Todo {
-  id: ID!
-  text: String!
-  done: Boolean!
-  user: User!
+# this schema represents a users account item
+# users can have an array of items representing their banking platform
+interface Node {
+  uuid: ID!
 }
 
-type User {
-  id: ID!
-  name: String!
+type Item implements Node{
+  uuid: ID!
+  user: User!
+  accounts: [Account!]!
+}
+
+type User implements Node{
+  uuid: ID!
+  userid: ID!
+}
+
+type Account implements Node{
+  uuid: ID!
+  AccountID: String!
+	Name: String!
+	OfficialName: String!
+	Type: String!
+	Subtype: String!
+	IntstitutionID: String!
+	VerificationStatus: Boolean
+	Balance: Balance!      
+      
+}
+
+type Balance implements Node{
+  uuid: ID!
+  Available: float64!
+	Current: float64!
+	Limit: float64!
+	Currency: String!
+	Account: float64!
 }
 
 type Query {
-  todos: [Todo!]!
+  item: [Item!]!
 }
 
-input NewTodo {
-  text: String!
-  userId: String!
+input NewItem {
+  userid: int!
+  accounts: [Account!]!
 }
 
 type Mutation {
-  createTodo(input: NewTodo!): Todo!
+  createTodo(input: NewItem!): Item!
 }
