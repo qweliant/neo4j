@@ -33,21 +33,20 @@ type Account implements Node{
 
 type Balance implements Node{
   uuid: ID!
-  Available: float64!
-	Current: float64!
-	Limit: float64!
+  Available: Float!
+	Current: Float!
+	Limit: Float!
 	Currency: String!
-	Account: float64!
+	Account: Float!
 }
 
 type Transaction implements Node{
-  Name: string           
-	MerchantName: string
-	Ammount: float64
-	Currency: string        
-	Category: []string       
-	Account: *Account       
-	Location: *Location     
+  Name: String!           
+	MerchantName: String!
+	Ammount: Float!
+	Currency: String!        
+	Category: [String!]!       
+	Account: Account!
 	PaymentChannel: String       
 	Pending: Boolean!
 }
