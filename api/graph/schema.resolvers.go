@@ -8,14 +8,17 @@ import (
 	"fmt"
 
 	"github.com/qweliant/neo4j/graph/generated"
+	"github.com/qweliant/neo4j/graph/middleware"
 	"github.com/qweliant/neo4j/graph/model"
 )
 
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
+	gc, err := GinContextFromContext(ctx)
 	panic(fmt.Errorf("not implemented"))
 }
 
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
+	gc, err := GinContextFromContext(ctx)
 	panic(fmt.Errorf("not implemented"))
 }
 
