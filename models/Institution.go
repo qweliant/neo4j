@@ -11,5 +11,5 @@ type Institution struct {
 	Products       []string
 	PrimaryColor   string `gogm:"name=prim_color"`
 	Logo           string `gogm:"name=logo"`
-	Item           *Item  `gogm:"direction=incoming;relationship=institution"`
+	Item           *Item  `gogm:"direction=outgoing;relationship=institution"`
 }
