@@ -21,11 +21,11 @@ func (server *Server) Database(DbUser string, DbPassword string, DbHost string, 
 	config := gogm.Config{
 		IndexStrategy: gogm.VALIDATE_INDEX, //other options are ASSERT_INDEX and IGNORE_INDEX
 		PoolSize:      50,
-		Port:          7687,
+		Port:          DbPort,
 		IsCluster:     false, //tells it whether or not to use `bolt+routing`
-		Host:          "0.0.0.0",
-		Password:      "password",
-		Username:      "neo4j",
+		Host:          DbHost,
+		Password:      DbPassword,
+		Username:      DbUser,
 	}
 
 	err := gogm.Init(

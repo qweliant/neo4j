@@ -27,8 +27,9 @@ func Run() {
 		log.Fatalf("Error getting env, %v", err)
 	}
 
-	dbPort := fmt.Sprintf(":%s", os.Getenv("DB_PORT"))
+	dbPort := fmt.Sprintf("%s", os.Getenv("DB_PORT"))
 	dbp, err := strconv.Atoi(dbPort)
+	fmt.Printf("user: %s password: %s host: %s port: %d", os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_HOST"), dbp)
 	server.Database(os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_HOST"), dbp)
 
 	// This is for testing, when done, do well to comment
