@@ -9,8 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/mindstand/gogm"
 
-	"github.com/qweliant/neo4j/middlewares"
-	"github.com/qweliant/neo4j/models"
+	"github.com/qweliant/neo4j/api/middlewares"
+	"github.com/qweliant/neo4j/apimodels"
 )
 
 
