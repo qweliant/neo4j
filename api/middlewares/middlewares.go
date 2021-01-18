@@ -1,10 +1,7 @@
 package middlewares
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
-	"github.com/tapfunds/tfapi/api/auth"
 )
 
 

@@ -10,7 +10,7 @@ import (
 	"github.com/mindstand/gogm"
 
 	"github.com/qweliant/neo4j/api/middlewares"
-	"github.com/qweliant/neo4j/apimodels"
+	"github.com/qweliant/neo4j/api/models"
 )
 
 
