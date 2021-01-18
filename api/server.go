@@ -6,14 +6,15 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"github.com/tapfunds/tfapi/api/controllers"
+	"github.com/qweliant/neo4j/api/controllers"
 )
 
 var server = controllers.Server{}
 
 func init() {
 	// loads values from .env into the system
-	if err := godotenv.Load(); err != nil {
+	if err := godotenv.Load()
+	err != nil {
 		log.Print("sad .env file found")
 	}
 }
@@ -21,7 +22,7 @@ func init() {
 func Run() {
 
 	var err error
-	err = godotenv.Load()
+	// err = godotenv.Load()
 	if err != nil {
 		log.Fatalf("Error getting env, %v", err)
 	}

@@ -14,8 +14,8 @@ func main() {
 		Port:          7687,
 		IsCluster:     false, //tells it whether or not to use `bolt+routing`
 		Host:          "0.0.0.0",
-		Password:      "password",
-		Username:      "neo4j",
+		Password:      "DB_DRIVER",
+		Username:      "DB_USER",
 	}
 
 	err := gogm.Init(
