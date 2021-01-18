@@ -368,11 +368,11 @@ func seedMultipleNodes(sess *gogm.Session) (string, error) {
 	accountC.Owner = owners3
 
 	user1 := &models.User{
-		UserID: "1",
+		UserID: 1,
 	}
 
 	user2 := &models.User{
-		UserID: "2",
+		UserID: 2,
 	}
 
 	var listOfAccnt1 []*models.Account
@@ -494,7 +494,7 @@ func seedOneNode(sess *gogm.Session) (string, error) {
 	accountC.Owner = owners3
 
 	user2 := &models.User{
-		UserID: "1",
+		UserID: 1,
 	}
 
 	i2 := &models.Item{}

@@ -112,12 +112,12 @@ func TestUpdateUser(t *testing.T) {
 		t.Errorf("The error getting the users: %v\n", err)
 		return
 	}
-	assert.Equal(t, readin.UserID, "1")
+	assert.Equal(t, readin.UserID, int64(1))
 
 	var copy models.User
 	copy = readin
 
-	readin.UserID = "3"
+	readin.UserID = int64(3)
 
 	err = sess.Save(&readin)
 	if err != nil {
