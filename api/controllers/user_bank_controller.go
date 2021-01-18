@@ -1,4 +1,4 @@
-package controller
+package controllers
 
 //// create user object in DB
 
