@@ -27,15 +27,15 @@ func Run() {
 		log.Fatalf("Error getting env, %v", err)
 	}
 
-	server.Initialize(os.Getenv("DB_DRIVER"), os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_PORT"), os.Getenv("DB_HOST"), os.Getenv("DB_NAME"))
+	server.Database(os.Getenv(os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"))
 
 	// This is for testing, when done, do well to comment
 	// seed.Load(server.DB)
 
-	apiPort := fmt.Sprintf(":%s", os.Getenv("API_PORT"))
+	apiPort := fmt.Sprintf(":%d", os.Getenv("API_PORT"))
 
 
 	server.Run(apiPort)
-	fmt.Printf("Listening to port %s", apiPort)
+	fmt.Printf("Listening to port %d", apiPort)
 
 }

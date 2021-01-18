@@ -1,15 +1,16 @@
 package controllers
 
 import (
-	"io/ioutil"
+	"fmt"
 	"log"
 	"net/http"
+	"io/ioutil"
 
 	"github.com/gin-gonic/gin"
 	"github.com/mindstand/gogm"
 
-	"github.com/qweliant/neo4j/api/middlewares"
-	"github.com/qweliant/neo4j/api/models"
+	"github.com/qweliant/neo4j/middlewares"
+	"github.com/qweliant/neo4j/models"
 )
 
 
@@ -20,15 +21,15 @@ type Server struct {
 }
 
 
-func (server *Server) Database() {
+func (server *Server) Database(DbUser, DbPassword, DbHost string, DbPort int) {
 	config := gogm.Config{
 		IndexStrategy: gogm.VALIDATE_INDEX, //other options are ASSERT_INDEX and IGNORE_INDEX
 		PoolSize:      50,
-		Port:          7687,
+		Port:          DbPort,
 		IsCluster:     false, //tells it whether or not to use `bolt+routing`
-		Host:          "0.0.0.0",
-		Password:      "password",
-		Username:      "neo4j",
+		Host:          DbHost,
+		Password:      DbPassword,
+		Username:      DbUser,
 	}
 
 	err := gogm.Init(
