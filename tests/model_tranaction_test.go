@@ -9,7 +9,7 @@ import (
 )
 
 func TestFindAllTransactions(t *testing.T) {
-	err := refreshTapNodes(sess)
+	err := refreshNodes(sess)
 	if err != nil {
 		t.Errorf("this is the error getting the transactions: %v\n", err)
 		return
@@ -36,7 +36,7 @@ func TestFindAllTransactions(t *testing.T) {
 
 // gets transactions for account id
 func TestFindUserTransaction(t *testing.T) {
-	err := refreshTapNodes(sess)
+	err := refreshNodes(sess)
 	if err != nil {
 		t.Errorf("this is the error getting the transactions: %v\n", err)
 		return
@@ -73,7 +73,7 @@ func TestFindUserTransaction(t *testing.T) {
 }
 
 func TestAddUserTransaction(t *testing.T) {
-	err := refreshTapNodes(sess)
+	err := refreshNodes(sess)
 	if err != nil {
 		t.Errorf("this is the error getting the transactions: %v\n", err)
 		return

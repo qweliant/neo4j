@@ -52,7 +52,7 @@ var (
 	sess, err = Database()
 )
 
-func refreshTapNodes(s *gogm.Session) error {
+func refreshNodes(s *gogm.Session) error {
 
 	err = s.PurgeDatabase()
 	if err != nil {

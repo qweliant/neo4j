@@ -8,7 +8,7 @@ import (
 )
 
 func TestFindAllBalances(t *testing.T) {
-	err := refreshTapNodes(sess)
+	err := refreshNodes(sess)
 	if err != nil {
 		t.Errorf("this is the error getting the balance: %v\n", err)
 		return

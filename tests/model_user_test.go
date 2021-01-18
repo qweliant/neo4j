@@ -14,7 +14,7 @@ import (
 )
 
 func TestFindAllUsers(t *testing.T) {
-	err := refreshTapNodes(sess)
+	err := refreshNodes(sess)
 	if err != nil {
 		t.Errorf("this is the error getting the users: %v\n", err)
 		return
@@ -40,7 +40,7 @@ func TestFindAllUsers(t *testing.T) {
 }
 
 func TestSaveUser(t *testing.T) {
-	err := refreshTapNodes(sess)
+	err := refreshNodes(sess)
 	if err != nil {
 		t.Errorf("this is the error getting the users: %v\n", err)
 		return
@@ -65,7 +65,7 @@ func TestSaveUser(t *testing.T) {
 }
 
 func TestFindUserByID(t *testing.T) {
-	err := refreshTapNodes(sess)
+	err := refreshNodes(sess)
 	if err != nil {
 		t.Errorf("this is the error getting the users: %v\n", err)
 		return
@@ -88,7 +88,7 @@ func TestFindUserByID(t *testing.T) {
 }
 
 func TestUpdateUser(t *testing.T) {
-	err := refreshTapNodes(sess)
+	err := refreshNodes(sess)
 	if err != nil {
 		t.Errorf("this is the error getting the users: %v\n", err)
 		return
@@ -130,7 +130,7 @@ func TestUpdateUser(t *testing.T) {
 }
 
 func TestDeleteUser(t *testing.T) {
-	err := refreshTapNodes(sess)
+	err := refreshNodes(sess)
 	if err != nil {
 		t.Errorf("this is the error getting the users: %v\n", err)
 		return
