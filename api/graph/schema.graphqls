@@ -27,8 +27,8 @@ type Account implements Node{
 	Subtype: String!
 	IntstitutionID: String!
 	VerificationStatus: Boolean
-	Balance: Balance!      
-      
+	Balance: Balance!
+  Transactions: [Transaction!]!
 }
 
 type Balance implements Node{
@@ -38,6 +38,18 @@ type Balance implements Node{
 	Limit: float64!
 	Currency: String!
 	Account: float64!
+}
+
+type Transaction implements Node{
+  Name: string           
+	MerchantName: string
+	Ammount: float64
+	Currency: string        
+	Category: []string       
+	Account: *Account       
+	Location: *Location     
+	PaymentChannel: String       
+	Pending: Boolean!
 }
 
 type Query {
