@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/joho/godotenv"
 	"github.com/qweliant/neo4j/api/controllers"
@@ -13,8 +14,7 @@ var server = controllers.Server{}
 
 func init() {
 	// loads values from .env into the system
-	if err := godotenv.Load()
-	err != nil {
+	if err := godotenv.Load(); err != nil {
 		log.Print("sad .env file found")
 	}
 }
@@ -27,14 +27,16 @@ func Run() {
 		log.Fatalf("Error getting env, %v", err)
 	}
 
-	server.Database(os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_HOST"), os.Getenv("DB_PORT"))
+	dbPort := fmt.Sprintf(":%s", os.Getenv("DB_PORT"))
+	dbp, err := strconv.Atoi(dbPort)
+	server.Database(os.Getenv("DB_USER"), os.Getenv("DB_PASSWORD"), os.Getenv("DB_HOST"), dbp)
 
 	// This is for testing, when done, do well to comment
 	// seed.Load(server.DB)
 
-	apiPort := fmt.Sprintf(":%d", os.Getenv("API_PORT"))
-
+	apiPort := fmt.Sprintf(":%s", os.Getenv("API_PORT"))
+	fmt.Printf("Listening to port %s", apiPort)
 
 	server.Run(apiPort)
-	fmt.Printf("Listening to port %d", apiPort)
+	
 }

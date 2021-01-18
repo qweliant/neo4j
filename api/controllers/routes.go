@@ -1,6 +1,5 @@
 package controllers
 
-
 func (s *Server) initializeRoutes() {
 
 	v1 := s.Router.Group("/api/map/v1")
