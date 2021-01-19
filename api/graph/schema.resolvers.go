@@ -5,18 +5,34 @@ package graph
 
 import (
 	"context"
+	"math/rand"
 	"fmt"
 
-	"github.com/qweliant/neo4j/graph/generated"
-	"github.com/qweliant/neo4j/graph/model"
+	"github.com/qweliant/neo4j/api/graph/generated"
+	"github.com/qweliant/neo4j/api/middlewares"
+	"github.com/qweliant/neo4j/api/graph/model"
 )
 
 func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	panic(fmt.Errorf("not implemented"))
+	_, err := middlewares.GinContextFromContext(ctx)
+	if err != nil {
+		return nil, err
+	}
+	todo := &model.Todo{
+		Text:   input.Text,
+		ID:     fmt.Sprintf("T%d", rand.Int()),
+		User: &model.User{ID: input.UserID, Name: "user " + input.UserID},
+	}
+	r.todos = append(r.todos, todo)
+	return todo, nil
 }
 
 func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	panic(fmt.Errorf("not implemented"))
+	_, err := middlewares.GinContextFromContext(ctx)
+	if err != nil {
+		return nil, err
+	}
+	return r.todos, nil
 }
 
 // Mutation returns generated.MutationResolver implementation.
