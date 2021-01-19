@@ -5,8 +5,8 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/qweliant/neo4j/api/graph"
-	"github.com/qweliant/neo4j/api/graph/generated"
+	"github.com/qweliant/neo4j/graph"
+	"github.com/qweliant/neo4j/graph/generated"
 )
 
 // Defining the Graphql handler
