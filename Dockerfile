@@ -1,4 +1,4 @@
-ARG GO_VERSION=1.15.3
+ARG GO_VERSION=1.15.5
 ARG ALPINE_VERSION=latest
 
 FROM golang:${GO_VERSION}-alpine AS builder
@@ -18,8 +18,6 @@ RUN mkdir /build
 ADD . /go/src/github.com/qweliant/neo4j 
 WORKDIR /go/src/github.com/qweliant/neo4j 
 
-RUN go get github.com/vektah/gorunpkg
-RUN go generate ./...
 
 RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -tags seabolt_static -o /app main.go
 
