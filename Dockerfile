@@ -15,13 +15,13 @@ RUN cmake -D CMAKE_BUILD_TYPE=Release -D CMAKE_INSTALL_LIBDIR=lib .. && cmake --
 
 RUN mkdir -p /go/src/github.com/qweliant/neo4j 
 RUN mkdir /build
-ADD . /go/src/github.com/charlysan/goneo4jgql/
-WORKDIR /go/src/github.com/charlysan/goneo4jgql 
+ADD . /go/src/github.com/qweliant/neo4j 
+WORKDIR /go/src/github.com/qweliant/neo4j 
 
 RUN go get github.com/vektah/gorunpkg
 RUN go generate ./...
 
-RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -tags seabolt_static -o /app cmd/main.go
+RUN CGO_ENABLED=1 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -tags seabolt_static -o /app main.go
 
 # Create alpine runtime image
 FROM alpine:${ALPINE_VERSION} as app
@@ -31,6 +31,6 @@ COPY --from=builder /app /app
 
 USER 1000
 
-EXPOSE 80
+EXPOSE 9090
 
 ENTRYPOINT ["/app"]
