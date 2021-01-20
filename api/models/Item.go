@@ -6,6 +6,6 @@ type Item struct {
 	gogm.BaseNode
 
 	User        *User        `gogm:"direction=incoming;relationship=item"`
-	Institution *Institution `gogm:"direction=incoming;relationship=institution"`
+	Institution *Institution `gogm:"direction=outgoing;relationship=institution"`
 	Accounts     []*Account   `gogm:"direction=outgoing;relationship=account"`
 }
