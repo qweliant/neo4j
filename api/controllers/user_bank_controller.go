@@ -9,6 +9,9 @@ package controllers
 //// 	item model
 import (
 	"github.com/gin-gonic/gin"
+	"io/ioutil"
+	"log"
+	"net/http"
 )
 
 func (server *Server) CreateUserItem(c *gin.Context) {
@@ -53,20 +56,20 @@ func (server *Server) CreateUserItem(c *gin.Context) {
 	})
 }
 
-func (server *Server) ReadUserItem(c *gin.Context) {
-	// must pass in user id
+// func (server *Server) ReadUserItem(c *gin.Context) {
+// 	// must pass in user id
 
-	return nil
-}
+// 	return nil
+// }
 
-func (server *Server) UpdateUserItem(c *gin.Context) {
-	// must pass in user id
+// func (server *Server) UpdateUserItem(c *gin.Context) {
+// 	// must pass in user id
 
-	return nil
-}
+// 	return nil
+// }
 
-func (server *Server) DeleteUserItem(c *gin.Context) {
-	// must pass in user id
+// func (server *Server) DeleteUserItem(c *gin.Context) {
+// 	// must pass in user id
 
-	return nil
-}
+// 	return nil
+// }

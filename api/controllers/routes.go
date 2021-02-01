@@ -7,7 +7,7 @@ func (s *Server) initializeRoutes() {
 		// API Status
 		v1.GET("/status", s.Status)
 
-		//Integration Token routes
+		//Object handling routes
 		v1.GET("/map_item/:id")
 		v1.POST("/map_item", s.CreateUserItem) // create
 	}

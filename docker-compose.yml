@@ -27,10 +27,11 @@ services:
     build:
       context: .
       dockerfile: ./Dockerfile
+    restart: always
     networks:
       - neo4j-net
     ports:
-      - '9090:9090'
+      - '1738:1738'
     depends_on:
       - neo4j
     env_file:

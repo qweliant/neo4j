@@ -29,6 +29,6 @@ COPY --from=builder /app /app
 
 USER 1000
 
-EXPOSE 9090
+EXPOSE 1738
 
 ENTRYPOINT ["/app"]
