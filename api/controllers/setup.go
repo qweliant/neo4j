@@ -57,6 +57,7 @@ func (server *Server) Database(DbUser string, DbPassword string, DbHost string, 
 	server.Router.Use(middlewares.CORSMiddleware())
 
 	server.initializeRoutes()
+	
 	//close the session
 	defer server.DB.Close()
 }

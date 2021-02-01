@@ -9,6 +9,6 @@ func (s *Server) initializeRoutes() {
 
 		//Integration Token routes
 		v1.GET("/map_item/:id")
-		v1.POST("/map_item") // create
+		v1.POST("/map_item", s.CreateUserItem) // create
 	}
 }
