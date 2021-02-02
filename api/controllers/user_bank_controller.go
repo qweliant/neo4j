@@ -12,6 +12,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+
 )
 
 func (server *Server) CreateUserItem(c *gin.Context) {
@@ -39,17 +40,9 @@ func (server *Server) CreateUserItem(c *gin.Context) {
 	// unpack using njson for golang
 	// send user off to neo4j with the right depth
 
-	body, err := ioutil.ReadAll(c.Request.Body)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{
-			"status": http.StatusBadRequest,
-			"error":  "The world has falllen and we are to slumber...",
-		})
-		return
-	}
-
-	sb := string(body)
-	log.Printf(sb)
+	userID := c.PostForm("user")
+	accessToken := c.PostForm("accesstoken")
+	log.Printf("User:",userID, "access token",accessToken)
 	
 	c.JSON(http.StatusOK, gin.H{
 		"status": http.StatusOK,
